@@ -1,8 +1,76 @@
 <html>
-<head>day 1</head>
+
+<head>
+	<title>day 1</title>
+	<style type="text/css">
+		body {
+			background: url('crowd.jpg') center center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.keys {
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+		}
+
+		.key {
+			font-size: 14pt;
+			margin: 10px;
+			border: 3px solid #333;
+			padding: 10px;
+			transition: all 1.07;
+			color: white;
+			background: rgba(50, 50, 50, 0.7);
+		}
+
+		.playing {
+			transform: scale(1.1);
+			border-color: #ffc600;
+			box-shadow: 0 0 10px #ffc600;
+		}
+	</style>
+
+</head>
+
 <body>
 	<div class="keys">
-
+		<div class="key" data-key="65"><kbd>A</kbd></div>
+		<div class="key" data-key="83"><kbd>S</kbd></div>
+		<div class="key" data-key="68"><kbd>D</kbd></div>
+		<div class="key" data-key="70"><kbd>F</kbd></div>
+		<div class="key" data-key="71"><kbd>G</kbd></div>
 	</div>
+
+	<audio data-key="65" src="sounds/AI-APiano01 01(R).wav"></audio>
+	<audio data-key="83" src="sounds/AI-APiano01 02(R).wav"></audio>
+	<audio data-key="68" src="sounds/AI-APiano01 03(R).wav"></audio>
+	<audio data-key="70" src="sounds/AI-APiano01 04(R).wav"></audio>
+	<audio data-key="71" src="sounds/AI-APiano01 05(R).wav"></audio>
 </body>
+
+<script>
+	function playSound(e) {
+		const audio = document.querySelector(`audio[data-key="${e.keyCode}"`);
+		const key = document.querySelector(`div[data-key="${e.keyCode}"`);
+		if (!audio) return;
+		audio.currentTime = 0;
+		audio.play();
+		key.classList.add('playing');
+	}
+
+	function transitionRemove(e) {
+		if (e.propertyName !== 'transform') return;
+		console.log(e.propertyName);
+		this.classList.remove('.playing');
+	}
+
+	const keys = document.querySelectorAll('.key');
+	keys.forEach(key => key.addEventListener('transition', transitionRemove));
+	window.addEventListener('keydown', playSound);
+
+</script>
+
 </html>
