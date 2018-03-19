@@ -39,7 +39,18 @@
       }
     ];
 
+    const types = ['car', 'car', 'walk', 'car', 'car', 'walk', 'car', 'walk', 'truck', 'truck'];
+
+    const t = types.reduce((obj, item) => {
+      if (!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    }, {});
+
     console.table(names);
+    console.log(t);
   </script>
 </body>
 
